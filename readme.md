@@ -21,3 +21,25 @@ The resulting model is checked for syntactic validity and measured according to 
 2. simplicity
 3. precision
 4. generalization       
+
+
+## Heuristic Miner parameters
+ > What do the different parameters mean
+### Classifier
+- Activity
+- Event Name 
+- Lifecycle transition
+- Resource
+- Activity Classifier
+
+### Threshold
+ - Relative to best - 0-100
+ - Dependency - 0-100
+ - Length-one-loops - 0-100
+ - Length-two-loops - 0-100
+ - Long distance - 0-100
+
+### Heuristics
+- All tasks connected - Radio
+- Long distance dependency - Radio
+- Ignore loop dependency threshold - Radio

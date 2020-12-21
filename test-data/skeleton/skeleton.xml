@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<log xsi:noNamespaceSchemaLocation="http://www.xes-standard.org/downloads/xes-ieee-1849-2016-April-15-2020.xsd" xes.version="-4827329.7650942" xes.features="string" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <extension name="string" prefix="string" uri="https://www.liquid-technologies.com" />
+    <extension name="string" prefix="string" uri="https://www.liquid-technologies.com" />
+    <extension name="string" prefix="string" uri="https://www.liquid-technologies.com" />
+    <extension name="string" prefix="string" uri="https://www.liquid-technologies.com" />
+    <global />
+    <global>
+        <date value="2013-05-27T23:28:52.84" key="string" />
+        <string value="string" key="string" />
+        <string value="string" key="string" />
+        <list key="string">
+            <values key="string" />
+        </list>
+    </global>
+    <global scope="string">
+        <boolean value="true" key="string" />
+        <boolean value="0" key="string" />
+        <string value="string" key="string" />
+        <string value="string" key="string" />
+    </global>
+    <global scope="string">
+        <int value="652" key="string" />
+        <int value="-3442" key="string" />
+    </global>
+    <classifier name="string" scope="string" keys="string" />
+    <classifier name="string" keys="string" />
+    <id value="string" key="string" />
+    <int value="-573" key="string" />
+    <string value="string" key="string" />
+    <boolean value="false" key="string" />
+    <trace>
+        <event />
+        <event />
+    </trace>
+    <trace />
+    <event>
+        <string value="string" key="string" />
+        <boolean value="false" key="string" />
+        <int value="-445" key="string" />
+        <int value="851" key="string" />
+    </event>
+    <event>
+        <string value="string" key="string" />
+    </event>
+</log>
