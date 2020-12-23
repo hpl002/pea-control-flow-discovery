@@ -1,13 +1,16 @@
 appnope==0.1.2
 autopep8==1.5.4
 backcall==0.2.0
+click==7.1.2
 cycler==0.10.0
 decorator==4.4.2
 deprecation==2.1.0
+Flask==1.1.2
 graphviz==0.15
 intervaltree==3.1.0
 ipython==7.19.0
 ipython-genutils==0.2.0
+itsdangerous==1.1.0
 jedi==0.17.2
 Jinja2==2.11.2
 joblib==1.0.0
@@ -52,3 +55,4 @@ tqdm==4.54.1
 traitlets==5.0.5
 watchdog==0.10.4
 wcwidth==0.2.5
+Werkzeug==1.0.1
