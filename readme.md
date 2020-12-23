@@ -1,4 +1,10 @@
 # readme <!-- omit in toc -->
+
+> add graphviz binary via home brew
+``` shell
+brew install graphviz
+```
+
 Service built using the [PM4PY](https://github.com/pm4py) library.  
 
 Simple service for discovering a process model from a .XES log  
