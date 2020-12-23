@@ -1,16 +1,20 @@
+
+import pm4py
 import os
-# importer
+from pathlib import Path
 from pm4py.objects.log.importer.xes import importer as xes_importer
-# discovery algorithm
 from pm4py.algo.discovery.inductive import algorithm as inductive_miner
-# visualizer
-from pm4py.visualization.process_tree import visualizer as pt_visualizer
+from pm4py.objects.conversion.process_tree import converter
 
-filePath = os.path.join("tests", "input_data", "running-example.xes")
+# import
+relativePath = os.path.join("test-data", "running-example.xes")
+log = xes_importer.apply(relativePath)
 
-log = xes_importer.apply(filePath)
+# mine
+tree = inductive_miner.apply_tree(log)
 
-net, initial_marking, final_marking = inductive_miner.apply(log)
+# convert process tree to BPMN
+bpmn_graph = converter.apply(tree, variant=converter.Variants.TO_BPMN)
 
-
-# comment
+# export to valid BPMN model
+pm4py.write_bpmn(bpmn_graph, "export.bpmn", enable_layout=True)
