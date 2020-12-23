@@ -1,3 +1,5 @@
 /main/export
 /main/import
 env
+/scripts/upt_requirements.sh
+/scripts/start.sh
