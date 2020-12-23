@@ -6,13 +6,8 @@ info:
   contact:
     email: hpl002@uib.com
 servers:
-  - url: 'localhost:3000/'
-paths:
-  /swagger.json:
-    get:
-      responses:
-        '200':
-          description: view swagger definition
+  - url: 'localhost:8080/'
+paths:  
   /api/discover:
     post:
       responses:
