@@ -6,19 +6,19 @@ info:
   contact:
     email: hpl002@uib.com
 servers:
-  - url: 'localhost:3000/api/'
+  - url: 'localhost:3000/'
 paths:
   /swagger.json:
     get:
       responses:
         '200':
           description: view swagger definition
-  /discover:
+  /api/discover:
     post:
       responses:
         '200':
           description: Mine a process tree from a .xes log by use of the inductive miner
-  /translate:
+  /api/translate:
     post:
       responses:
         '200':
