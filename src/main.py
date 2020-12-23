@@ -1,9 +1,11 @@
 import os
-from flask import Flask, flash, request, redirect, url_for
+from pathlib import Path
+from flask import Flask, flash, request, redirect, url_for, Response
 from swagger_ui import flask_api_doc
 
-UPLOAD_FOLDER = './upload'
-ALLOWED_EXTENSIONS = {'.xes'}
+UPLOAD_FOLDER = './upload/'
+ALLOWED_EXTENSIONS = {'xes'}
+CWD = os.getcwd()
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -16,7 +18,7 @@ def allowed_file(filename):
 
 
 # ENDPOINTS
-flask_api_doc(app, config_path='../swagger.yaml',
+flask_api_doc(app, config_path='swagger.yaml',
               url_prefix='/api/doc', title='API doc')
 
 
@@ -38,5 +40,6 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-            flash('No selected file')
+            dest = Path(app.config['UPLOAD_FOLDER']).resolve()
+            file.save(os.path.join(dest, file.filename))
+            return Response("successfull upload", status=200, mimetype='application/json')
