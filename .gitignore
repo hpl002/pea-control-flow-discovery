@@ -1,4 +1,4 @@
-/main/export
-/main/import
+/src/export
+/src/import
 env
 /scripts/upt_requirements.sh
