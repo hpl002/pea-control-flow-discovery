@@ -3,3 +3,4 @@ env
 /upload/*
 /export/*
 /src/__pycache__
+todo.md
