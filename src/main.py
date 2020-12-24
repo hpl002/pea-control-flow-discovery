@@ -1,11 +1,12 @@
 import os
+import miner
+import helper
 from pathlib import Path
 from flask import Flask, flash, request, redirect, url_for, Response
 from swagger_ui import flask_api_doc
 
 UPLOAD_FOLDER = './upload/'
-ALLOWED_EXTENSIONS = {'xes'}
-CWD = os.getcwd()
+ALLOWED_EXTENSIONS = {'xes', 'bpmn', 'ptml'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -40,6 +41,10 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            dest = Path(app.config['UPLOAD_FOLDER']).resolve()
-            file.save(os.path.join(dest, file.filename))
-            return Response("successfull upload", status=200, mimetype='application/json')
+            ext = file.filename.rsplit('.', 1)[1].lower()
+            uploadDir = Path(app.config['UPLOAD_FOLDER']).resolve()
+            # delete any existing file in upload dir
+            helper.wipe_dir(uploadDir)
+            file.save(os.path.join(uploadDir, "file"+"."+ext))
+            message = miner.mine()
+            return Response(message, status=200, mimetype='application/json')
