@@ -50,3 +50,7 @@ def translate():
         message = miner.translate()
         export_fileName = helper.get_filename_from_dir(DOWNLOAD_DIR_PATH)
         return send_file(os.path.join(DOWNLOAD_DIR_PATH, export_fileName), attachment_filename=export_fileName, mimetype="text/xml", as_attachment=True)
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=8080)

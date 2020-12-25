@@ -1,6 +1,6 @@
 env
 /scripts/upt_requirements.sh
-/upload/*
-/export/*
-/src/__pycache__
+/app/upload/*
+/app/export/*
+/app/src/__pycache__
 todo.md
