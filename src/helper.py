@@ -23,3 +23,14 @@ def mv_file_to_export_dir(pCurrent, pFilename):
     """
     os.rename(os.path.join(pCurrent, pFilename),
               os.path.join(pCurrent, "export", pFilename))
+
+
+def get_filename_from_dir(pPath):
+    """[get filename from dir]
+
+    Args:
+        path ([string]): [absolute path to dir]
+    """
+    files = glob.glob(os.path.join(pPath, "*"))
+    for f in files:
+        return f

@@ -38,5 +38,5 @@ def upload_file():
             helper.wipe_dir(UPLOAD_DIR_PATH)
             file.save(os.path.join(UPLOAD_DIR_PATH, "file"+"."+ext))
             message = miner.mine()
-            return send_file('/', attachment_filename='ohhey.pdf')
-            # return Response(message, status=200, mimetype='application/json')
+            export_fileName = helper.get_filename_from_dir(DOWNLOAD_DIR_PATH)
+            return send_file(os.path.join(DOWNLOAD_DIR_PATH, export_fileName), attachment_filename=export_fileName, mimetype="text/xml")
