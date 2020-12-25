@@ -11,22 +11,6 @@ ALLOWED_EXTENSIONS = {'xes', 'bpmn', 'ptml'}
 
 app = Flask(__name__)
 
-
-# HELPERS
-def allowed_file(filename, extentions):
-    """[checks filename for allowed extension]
-
-    Args:
-        filename ([string]): [filename]
-        extentions ([arr:string]): [arr of extensions, w/o dot]
-
-    Returns:
-        [type]: [boolean]
-    """
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in extentions
-
-
 # ENDPOINTS
 flask_api_doc(app, config_path='swagger.yaml',
               url_prefix='/api/doc', title='API doc')
@@ -40,7 +24,7 @@ def upload_file():
         file = request.files['file']
         if file.filename == '':
             return 400, "No filename found"
-        if file and not allowed_file(file.filename, ["xes"]):
+        if file and not helper.allowed_file(file.filename, ["xes"]):
             return "Incompatible filetype. Expected .xes", 422
         ext = file.filename.rsplit('.', 1)[1].lower()
         helper.wipe_dir(UPLOAD_DIR_PATH)

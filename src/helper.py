@@ -34,3 +34,17 @@ def get_filename_from_dir(pPath):
     files = glob.glob(os.path.join(pPath, "*"))
     for f in files:
         return f
+
+
+def allowed_file(filename, extentions):
+    """[checks filename for allowed extension]
+
+    Args:
+        filename ([string]): [filename]
+        extentions ([arr:string]): [arr of extensions, w/o dot]
+
+    Returns:
+        [type]: [boolean]
+    """
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in extentions
