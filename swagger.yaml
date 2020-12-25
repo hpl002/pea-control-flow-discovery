@@ -6,16 +6,69 @@ info:
   contact:
     email: hpl002@uib.com
 servers:
-  - url: 'localhost:8080/'
-paths:  
-  /api/discover:
+- url: https://localhost:8080/api
+  variables: {}
+paths:
+  /discover:
     post:
+      tags:
+      - Misc
+      summary: discover
+      operationId: discover
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+        required: false
       responses:
-        '200':
-          description: Mine a process tree from a .xes log by use of the inductive miner
-  /api/translate:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /translate:
     post:
+      tags:
+      - Misc
+      summary: translate
+      operationId: translate
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+        required: false
       responses:
-        '200':
-          description: translate a process tree to bpmn diagram
-   
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /doc:
+    get:
+      tags:
+      - Misc
+      summary: doc
+      operationId: doc
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+tags:
+- name: Misc
+  description: ''
