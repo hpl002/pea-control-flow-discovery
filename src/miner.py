@@ -22,4 +22,3 @@ def mine():
     helper.wipe_dir(os.path.join(CURRENT, "export"))
     ptml_exporter.apply(tree, "file.ptml")
     helper.mv_file_to_export_dir(CURRENT, "file.ptml")
-    return "success"
