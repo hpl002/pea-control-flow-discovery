@@ -1,4 +1,4 @@
-FROM python:3.9.1
+FROM python:3.9.1-slim
 
 RUN apt-get update
 RUN apt-get install graphviz gcc libgraphviz-dev -y 
