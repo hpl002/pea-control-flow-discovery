@@ -1,5 +1,10 @@
 # readme <!-- omit in toc -->
 
+> activate python virtual environment: 
+``` shell 
+source <pathToEnv>/bin/activate  
+```
+
 > add graphviz binary via home brew
 ``` shell
 brew install graphviz
