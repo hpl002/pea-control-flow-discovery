@@ -22,8 +22,8 @@ def mine():
 
 def translate():
     """[translates process tree to BPMN 2.0 model] """
-    relativePath = os.path.join("upload", "file.ptml")
-    tree = ptml_importer.apply(relativePath)
+    log = os.path.join("upload", "file.ptml")
+    tree = ptml_importer.apply(log)
     bpmn_graph = converter.apply(tree, variant=converter.Variants.TO_BPMN)
     helper.wipe_dir(os.path.join(CURRENT, "export"))
     write_bpmn(bpmn_graph, "file.bpmn", enable_layout=True)
