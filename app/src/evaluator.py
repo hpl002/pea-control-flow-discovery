@@ -9,10 +9,10 @@ from pm4py.evaluation.simplicity import evaluator as simplicity_evaluator
 
 class Evaluator:
     def __init__(self, log, net, im, fm):
-        self.log = log
-        self.net = net
-        self.im = im
-        self.fm = fm
+        self.log = log  # event log
+        self.net = net  # petri-net
+        self.im = im  # initial marking
+        self.fm = fm  # final marking
 
     def replayFitnessTokenBased(self):
         """[get fitness using token-based replay]
