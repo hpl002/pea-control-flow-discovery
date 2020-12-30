@@ -19,13 +19,10 @@ flask_api_doc(app, config_path="swagger.yaml",
 @app.route("/api/discover", methods=["POST"])
 def discover():
     if request.method == "POST":
-        if "file" not in request.files:
-            return 400, "No file found"
-        file = request.files["file"]
-        if file.filename == "":
-            return 400, "No filename found"
-        if file and not helper.allowed_file(file.filename, ["xes"]):
-            return "Incompatible filetype. Expected .xes", 422
+        try:
+            file = helper.is_correct_file(request.files, "log", "xes")
+        except helper.HTTP_FileNotFoundError as e:
+            return e.message, e.http
         ext = file.filename.rsplit(".", 1)[1].lower()
         helper.wipe_dir(UPLOAD_DIR_PATH)
         file.save(os.path.join(UPLOAD_DIR_PATH, "file" + "." + ext))
@@ -42,36 +39,7 @@ def discover():
 @app.route("/api/translate", methods=["POST"])
 def translate():
     if request.method == "POST":
-        if "file" not in request.files:
-            return 400, "No file found"
-        file = request.files["file"]
-        if file.filename == "":
-            return 400, "No filename found"
-        if file and not helper.allowed_file(file.filename, ["ptml"]):
-            return "Incompatible filetype. Expected .ptml", 422
-        ext = file.filename.rsplit(".", 1)[1].lower()
-        helper.wipe_dir(UPLOAD_DIR_PATH)
-        file.save(os.path.join(UPLOAD_DIR_PATH, "file" + "." + ext))
-        miner.translate()
-        export_fileName = helper.get_filename_from_dir(DOWNLOAD_DIR_PATH)
-        return send_file(
-            os.path.join(DOWNLOAD_DIR_PATH, export_fileName),
-            attachment_filename=export_fileName,
-            mimetype="text/xml",
-            as_attachment=True,
-        )
-
-
-@app.route("/api/evaluate", methods=["POST"])
-def translate():
-    if request.method == "POST":
-        if "file" not in request.files:
-            return 400, "No file found"
-        file = request.files["file"]
-        if file.filename == "":
-            return 400, "No filename found"
-        if file and not helper.allowed_file(file.filename, ["ptml"]):
-            return "Incompatible filetype. Expected .ptml", 422
+        file = helper.is_correct_file(request.files, "tree", "ptml")
         ext = file.filename.rsplit(".", 1)[1].lower()
         helper.wipe_dir(UPLOAD_DIR_PATH)
         file.save(os.path.join(UPLOAD_DIR_PATH, "file" + "." + ext))
