@@ -5,6 +5,11 @@
 source <pathToEnv>/bin/activate  
 ```
 
+> starting server: 
+``` shell 
+python <pathToMain.py>
+```
+
 > add graphviz binary via home brew
 ``` shell
 brew install graphviz
