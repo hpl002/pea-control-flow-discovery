@@ -5,9 +5,9 @@
 source <pathToEnv>/bin/activate  
 ```
 
-> starting server: 
+> always start server with /app as workigdir: 
 ``` shell 
-python <pathToMain.py>
+python <pathToAppDir>/src/main.py
 ```
 
 > add graphviz binary via home brew
