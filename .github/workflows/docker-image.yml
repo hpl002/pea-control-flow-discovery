@@ -8,7 +8,7 @@ on:
       - master
 
 env:
-  IMAGE_NAME: gui
+  IMAGE_NAME: discovery 
   MAJOR: 0
   MINOR: 0
   PATCH: ${{ github.run_number }}
