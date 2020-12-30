@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  title: discovery_service
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://localhost:8080/api
+  variables: {}
+paths:
+  /discover:
+    post:
+      tags:
+      - Misc
+      summary: discover
+      operationId: discover
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - log
+              type: object
+              properties:
+                log:
+                  type: string
+        required: false
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /translate:
+    post:
+      tags:
+      - Misc
+      summary: translate
+      operationId: translate
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+        required: false
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /doc:
+    get:
+      tags:
+      - Misc
+      summary: doc
+      operationId: doc
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /evaluate:
+    post:
+      tags:
+      - Misc
+      summary: evaluate
+      operationId: evaluate
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - tree
+              - log
+              - methods
+              type: object
+              properties:
+                tree:
+                  type: string
+                log:
+                  type: string
+                methods:
+                  $ref: '#/components/schemas/methods'
+        required: false
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    methods:
+      title: methods
+      required:
+      - replayFitnessTokenBased
+      - replaysFitnessAlignmentBased
+      - precisionETConformance
+      - precisionAlignETConformance
+      - generalization
+      - simplicity
+      type: object
+      properties:
+        replayFitnessTokenBased:
+          type: boolean
+        replaysFitnessAlignmentBased:
+          type: boolean
+        precisionETConformance:
+          type: boolean
+        precisionAlignETConformance:
+          type: boolean
+        generalization:
+          type: boolean
+        simplicity:
+          type: boolean
+      example:
+        replayFitnessTokenBased: false
+        replaysFitnessAlignmentBased: false
+        precisionETConformance: false
+        precisionAlignETConformance: false
+        generalization: false
+        simplicity: false
+tags:
+- name: Misc
+  description: ''

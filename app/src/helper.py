@@ -58,7 +58,7 @@ def allowed_file(filename, extentions):
 
 
 def is_correct_file(files, prop, ext):
-    """[check if file exists and return accordingly]
+    """[check if file exists if not then throw exception]
 
     Args:
         files ([type]): [description]

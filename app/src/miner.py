@@ -1,5 +1,6 @@
 import os
 import helper
+import evaluator
 from pathlib import Path
 from pm4py.objects.log.importer.xes import importer as xes_importer
 from pm4py.algo.discovery.inductive import algorithm as inductive_miner
@@ -11,20 +12,44 @@ from pm4py.write import write_bpmn
 CURRENT = os.getcwd()
 
 
-def mine():
+def mine(filename):
     """[mines .xes to process model / process tree] """
-    log = xes_importer.apply(os.path.join("upload", "file.xes"))
+    log = xes_importer.apply(os.path.join("upload", filename))
     tree = inductive_miner.apply_tree(log)
     helper.wipe_dir(os.path.join(CURRENT, "export"))
-    ptml_exporter.apply(tree, "file.ptml")
-    helper.mv_file_to_export_dir(CURRENT, "file.ptml")
+    name = Path(filename).stem
+    ptml_exporter.apply(tree, name + ".ptml")
+    helper.mv_file_to_export_dir(CURRENT, name + ".ptml")
 
 
-def translate():
+def translate(filename):
     """[translates process tree to BPMN 2.0 model] """
-    log = os.path.join("upload", "file.ptml")
-    tree = ptml_importer.apply(log)
+    tree = ptml_importer.apply(os.path.join("upload", filename))
     bpmn_graph = converter.apply(tree, variant=converter.Variants.TO_BPMN)
     helper.wipe_dir(os.path.join(CURRENT, "export"))
-    write_bpmn(bpmn_graph, "file.bpmn", enable_layout=True)
-    helper.mv_file_to_export_dir(CURRENT, "file.bpmn")
+    name = Path(filename).stem
+    write_bpmn(bpmn_graph, name + ".bpmn", enable_layout=True)
+    helper.mv_file_to_export_dir(CURRENT, name + ".bpmn")
+
+
+# take dict as arg
+# check  that the object has all expexted keys
+# execute all "enabled functions"
+
+
+def evaluate(funcs, filename_tree, filename_log):
+    """[execute all truthy eval function in funcs object] """
+    tree = ptml_importer.apply(os.path.join("upload", filename_tree))
+    log = xes_importer.apply(os.path.join("upload", filename_log))
+
+    # transform proces tree to petri net
+    net, im, fm = converter.apply(tree)
+    # perform evaluation
+    e = evaluator.ModelLogEvaluator(log, net, im, fm)
+
+    for key in funcs:
+        if funcs[key] == True:
+            func = getattr(e, key)
+            func()
+            funcs[key] = func()
+    return funcs

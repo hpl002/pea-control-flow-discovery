@@ -1,0 +1,10 @@
+{
+  "methods": {
+    "replayFitnessTokenBased": false,
+    "replayFitnessAlignmentBased": false,
+    "precisionETConformance": false,
+    "precisionAlignETConformance": false,
+    "generalization": false,
+    "simplicity": false
+  }
+}

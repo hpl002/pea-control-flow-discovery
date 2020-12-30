@@ -7,7 +7,7 @@ from pm4py.evaluation.generalization import evaluator as generalization_evaluato
 from pm4py.evaluation.simplicity import evaluator as simplicity_evaluator
 
 
-class Evaluator:
+class ModelLogEvaluator:
     def __init__(self, log, net, im, fm):
         self.log = log  # event log
         self.net = net  # petri-net
