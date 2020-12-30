@@ -7,108 +7,101 @@ from pm4py.evaluation.generalization import evaluator as generalization_evaluato
 from pm4py.evaluation.simplicity import evaluator as simplicity_evaluator
 
 
-def evaluate():
-    """[performs log-model evaluation] """
-    log = os.path.join("upload", "file.ptml")
-    tree = ptml_importer.apply(log)
-    bpmn_graph = converter.apply(tree, variant=converter.Variants.TO_BPMN)
-    helper.wipe_dir(os.path.join(CURRENT, "export"))
-    write_bpmn(bpmn_graph, "file.bpmn", enable_layout=True)
-    helper.mv_file_to_export_dir(CURRENT, "file.bpmn")
+class Evaluator:
+    def __init__(self, log, net, im, fm):
+        self.log = log
+        self.net = net
+        self.im = im
+        self.fm = fm
 
+    def replayFitnessTokenBased(self):
+        """[get fitness using token-based replay]
 
-def replayFitnessTokenBased(log, net, im, fm):
-    """[get fitness using token-based replay]
+        Args:
+            log ([log]): [event log]
+            net ([net]): [petri net]
+            im ([initial_marking]): [initial marking]
+            fm ([final marking]): [final marking]
 
-    Args:
-        log ([log]): [event log]
-        net ([net]): [petri net]
-        im ([initial_marking]): [initial marking]
-        fm ([final marking]): [final marking]
+        Returns:
+            [int]: [score]
+        """
+        r = replay_fitness_evaluator.apply(
+            self.log, self.net, self.im, self.fm, variant=replay_fitness_evaluator.Variants.TOKEN_BASED)
+        return r
 
-    Returns:
-        [int]: [score]
-    """
-    r = replay_fitness_evaluator.apply(
-        log, net, im, fm, variant=replay_fitness_evaluator.Variants.TOKEN_BASED)
-    return r
+    def replayFitnessAlignmentBased(self):
+        """[get fitness using token-based replay]
 
+        Args:
+            log ([log]): [event log]
+            net ([net]): [petri net]
+            im ([initial_marking]): [initial marking]
+            fm ([final marking]): [final marking]
 
-def replayFitnessAlignmentBased(log, net, im, fm):
-    """[get fitness using token-based replay]
+        Returns:
+            [int]: [score]
+        """
+        r = replay_fitness_evaluator.apply(
+            self.log, self.net, self.im, self.fm, variant=replay_fitness_evaluator.Variants.ALIGNMENT_BASED)
+        return r
 
-    Args:
-        log ([log]): [event log]
-        net ([net]): [petri net]
-        im ([initial_marking]): [initial marking]
-        fm ([final marking]): [final marking]
+    def precisionETConformance(self):
+        """[get precision using ETConformance, which is using token-based replay]
 
-    Returns:
-        [int]: [score]
-    """
-    r = replay_fitness_evaluator.apply(
-        log, net, im, fm, variant=replay_fitness_evaluator.Variants.ALIGNMENT_BASED)
-    return r
+        Args:
+            log ([log]): [event log]
+            net ([net]): [petri net]
+            im ([initial_marking]): [initial marking]
+            fm ([final marking]): [final marking]
 
+        Returns:
+            [int]: [score]
+        """
+        r = precision_evaluator.apply(
+            self.log, self.net, self.im, self.fm, variant=precision_evaluator.Variants.ETCONFORMANCE_TOKEN)
+        return r
 
-def precisionETConformance(log, net, im, fm):
-    """[get precision using ETConformance, which is using token-based replay]
+    def precisionAlignETConformance(self):
+        """[get precision using Align-ETConformance, which is using alignment]
 
-    Args:
-        log ([log]): [event log]
-        net ([net]): [petri net]
-        im ([initial_marking]): [initial marking]
-        fm ([final marking]): [final marking]
+        Args:
+            log ([log]): [event log]
+            net ([net]): [petri net]
+            im ([initial_marking]): [initial marking]
+            fm ([final marking]): [final marking]
 
-    Returns:
-        [int]: [score]
-    """
-    r = precision_evaluator.apply(
-        log, net, im, fm, variant=precision_evaluator.Variants.ETCONFORMANCE_TOKEN)
-    return r
+        Returns:
+            [int]: [score]
+        """
+        r = precision_evaluator.apply(
+            self.log, self.net, self.im, self.fm, variant=precision_evaluator.Variants.ALIGN_ETCONFORMANCE)
+        return r
 
+    def generalization(self):
+        """[get generalization score]
 
-def precisionAlignETConformance(log, net, im, fm):
-    """[get precision using Align-ETConformance, which is using alignment]
+        Args:
+            log ([log]): [event log]
+            net ([net]): [petri net]
+            im ([initial_marking]): [initial marking]
+            fm ([final marking]): [final marking]
 
-    Args:
-        log ([log]): [event log]
-        net ([net]): [petri net]
-        im ([initial_marking]): [initial marking]
-        fm ([final marking]): [final marking]
+        Returns:
+            [int]: [score]
+        """
+        r = generalization_evaluator.apply(
+            self.log, self.net, self.im, self.fm)
+        return r
 
-    Returns:
-        [int]: [score]
-    """
-    r = precision_evaluator.apply(
-        log, net, im, fm, variant=precision_evaluator.Variants.ALIGN_ETCONFORMANCE)
-    return r
+    def simplicity(self):
+        """[get simplicity score]
 
+        Args:
+            net ([net]): [petri net]
 
-def generalization(log, net, im, fm):
-    """[get generalization score]
-
-    Args:
-        log ([log]): [event log]
-        net ([net]): [petri net]
-        im ([initial_marking]): [initial marking]
-        fm ([final marking]): [final marking]
-
-    Returns:
-        [int]: [score]
-    """
-    r = generalization_evaluator.apply(log, net, im, fm)
-    return r
-
-
-def simplicity(net):
-    """[get simplicity score]
-
-    Args:
-        net ([net]): [petri net]
-
-    Returns:
-        [int]: [score]
-    """
-    r = simplicity_evaluator.apply(net)
-    return r
+        Returns:
+            [int]: [score]
+        """
+        r = simplicity_evaluator.apply(self.net)
+        return r
