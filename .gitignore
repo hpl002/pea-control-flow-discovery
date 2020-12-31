@@ -2,5 +2,4 @@ env
 /scripts/upt_requirements.sh
 /app/upload/*
 /app/export/*
-/app/src/__pycache__
-todo.md
+**/**.pyc
