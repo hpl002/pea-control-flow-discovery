@@ -57,12 +57,6 @@ def translate():
 
 
 @ app.route("/api/evaluate", methods=["POST"])
-# get passed the process tree as file
-# get passed the event log as file
-# get passed a dictionary where the keys are the function names of the evaluator
-# if the key is actually a function and also true then execute the function
-# if the value is false or the key does not map to some funcion then dont do anything for that key
-# return the same object that was passed in but with all true values replaced with actual calculated values
 def evalaute():
     if request.method == "POST":
         try:
