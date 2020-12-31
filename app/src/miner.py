@@ -1,6 +1,7 @@
 import os
 import helper
 import evaluator
+import json
 from pathlib import Path
 from pm4py.objects.log.importer.xes import importer as xes_importer
 from pm4py.algo.discovery.inductive import algorithm as inductive_miner
@@ -8,6 +9,7 @@ from pm4py.objects.conversion.process_tree import converter
 from pm4py.objects.process_tree.exporter import exporter as ptml_exporter
 from pm4py.objects.process_tree.importer import importer as ptml_importer
 from pm4py.write import write_bpmn
+from pm4py.algo.enhancement.roles import algorithm as roles_discovery
 
 CURRENT = os.getcwd()
 
@@ -53,3 +55,11 @@ def evaluate(funcs, filename_tree, filename_log):
             func()
             funcs[key] = func()
     return funcs
+
+
+def mineforroles(filename):
+    """[Role detection. Used to get a picture of which activities are executed by which roles] """
+    log = xes_importer.apply(os.path.join("upload", filename))
+    roles = roles_discovery.apply(log)
+    jsonString = json.dumps(roles)
+    return jsonString

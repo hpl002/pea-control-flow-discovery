@@ -82,5 +82,18 @@ def evalaute():
         return result
 
 
+@app.route("/api/rolediscovery", methods=["POST"])
+def rolediscovery():
+    if request.method == "POST":
+        try:
+            file = helper.is_correct_file(request.files, "log", "xes")
+        except helper.HTTP_FileNotFoundError as e:
+            return e.message, e.http
+        helper.wipe_dir(UPLOAD_DIR_PATH)
+        file.save(os.path.join(UPLOAD_DIR_PATH, file.filename))
+        result = miner.mineforroles(file.filename)
+        return result
+
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8080)
