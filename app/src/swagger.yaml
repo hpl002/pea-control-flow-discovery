@@ -4,7 +4,7 @@ info:
   contact: {}
   version: '1.0'
 servers:
-- url: https://localhost:8080/api
+- url: http://localhost:8080/api
   variables: {}
 paths:
   /discover:
@@ -12,6 +12,7 @@ paths:
       tags:
       - Misc
       summary: discover
+      description: "Discover a process-tree by use of the heuristic miner. \nRequired an event log in specified in .xes format."
       operationId: discover
       parameters: []
       requestBody:
@@ -25,18 +26,20 @@ paths:
               properties:
                 log:
                   type: string
+                  description: the log file
         required: false
       responses:
         200:
           description: ''
           headers: {}
       deprecated: false
-  /translate:
+  /translate/petri:
     post:
       tags:
       - Misc
-      summary: translate
-      operationId: translate
+      summary: translate petri
+      description: Translates a process-tree to a valid patri-net.
+      operationId: translatepetri
       parameters: []
       requestBody:
         content:
@@ -44,10 +47,10 @@ paths:
             encoding: {}
             schema:
               required:
-              - file
+              - tree
               type: object
               properties:
-                file:
+                tree:
                   type: string
         required: false
       responses:
@@ -60,6 +63,7 @@ paths:
       tags:
       - Misc
       summary: doc
+      description: endpoint for viewing this api spec in swagger-ui
       operationId: doc
       parameters: []
       responses:
@@ -72,6 +76,45 @@ paths:
       tags:
       - Misc
       summary: evaluate
+      description: >-
+        # Endpoint for performing different evaluation functions.
+
+
+        For more details about the specifics of these employed methods i diverge to the library documentation: https://pm4py.fit.fraunhofer.de/documentation#evaluation
+
+
+        ### Replay fitness
+
+
+        -  replayFitnessTokenBased
+
+        - replaysFitnessAlignmentBased
+
+
+        ### precision
+
+
+        - precisionETConformance
+
+
+        - precisionAlignETConformance
+
+
+
+
+        ### generalization
+
+
+        - generalization
+
+
+        ### generalization
+
+
+        ### simplicity
+
+
+        - simplicity
       operationId: evaluate
       parameters: []
       requestBody:
@@ -91,6 +134,56 @@ paths:
                   type: string
                 methods:
                   $ref: '#/components/schemas/methods'
+        required: false
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /rolediscovery:
+    post:
+      tags:
+      - Misc
+      summary: role discovery
+      description: https://pm4py.fit.fraunhofer.de/documentation#item-11-5
+      operationId: rolediscovery
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - log
+              type: object
+              properties:
+                log:
+                  type: string
+        required: false
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /translate/bpmn:
+    post:
+      tags:
+      - Misc
+      summary: translate BPMN
+      description: Translates a process-tree to a valid BPMN model.
+      operationId: translateBPMN
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - tree
+              type: object
+              properties:
+                tree:
+                  type: string
         required: false
       responses:
         200:
