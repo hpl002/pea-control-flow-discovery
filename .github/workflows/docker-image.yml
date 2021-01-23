@@ -1,9 +1,7 @@
 name: Docker
 
 on:
-  push:
-    # no not publish images using teh latest tag. 
-    # using semver. patch set as run id
+  push:     
     branches:
       - master
 
