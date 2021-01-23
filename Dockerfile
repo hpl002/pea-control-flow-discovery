@@ -10,6 +10,9 @@ COPY ./app/ /app
 
 WORKDIR /app 
 
+RUN mkdir export
+RUN mkdir upload
+
 ENTRYPOINT [ "python" ]
 
 CMD [ "src/main.py" ]
