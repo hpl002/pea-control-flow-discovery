@@ -10,8 +10,8 @@ COPY ./app/ /app
 
 WORKDIR /app 
 
-RUN mkdir export
-RUN mkdir upload
+RUN mkdir /app/export/
+RUN mkdir /app/upload/
 
 ENTRYPOINT [ "python" ]
 
