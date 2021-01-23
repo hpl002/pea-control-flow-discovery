@@ -37,8 +37,8 @@ def discover():
         )
 
 
-@ app.route("/api/translate", methods=["POST"])
-def translate():
+@ app.route("/api/translate/bpmn", methods=["POST"])
+def translateBPMN():
     if request.method == "POST":
         try:
             file = helper.is_correct_file(request.files, "tree", "ptml")
@@ -46,7 +46,7 @@ def translate():
             return e.message, e.http
         helper.wipe_dir(UPLOAD_DIR_PATH)
         file.save(os.path.join(UPLOAD_DIR_PATH, file.filename))
-        miner.translate(file.filename)
+        miner.translateBPMN(file.filename)
         export_fileName = helper.get_filename_from_dir(DOWNLOAD_DIR_PATH)
         return send_file(
             os.path.join(DOWNLOAD_DIR_PATH, export_fileName),
@@ -54,6 +54,24 @@ def translate():
             mimetype="text/xml",
             as_attachment=True,
         )
+
+@ app.route("/api/translate/petri", methods=["POST"])
+def translatePetri():
+    if request.method == "POST":
+        try:
+            file = helper.is_correct_file(request.files, "tree", "ptml")
+        except helper.HTTP_FileNotFoundError as e:
+            return e.message, e.http
+        helper.wipe_dir(UPLOAD_DIR_PATH)
+        file.save(os.path.join(UPLOAD_DIR_PATH, file.filename))
+        miner.translatePetri(file.filename)
+        export_fileName = helper.get_filename_from_dir(DOWNLOAD_DIR_PATH)
+        return send_file(
+            os.path.join(DOWNLOAD_DIR_PATH, export_fileName),
+            attachment_filename=export_fileName,
+            mimetype="text/xml",
+            as_attachment=True,
+        )        
 
 
 @ app.route("/api/evaluate", methods=["POST"])
